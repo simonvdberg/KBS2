@@ -3,20 +3,24 @@
 namespace modules;
 
 /**
- * Description of googleApi
+ * Description of GoogleApi
  *
  * @author Jonas
  */
 class GoogleApi {
 
-    private $key = "AIzaSyD1pB1Y5vZ473bbeXCP2UxiGsFKilpXCAo";
-    private $params = array();
-    private $lastResult;
-    
+    protected $params = array();
+    protected $key;
+    protected $lastResult;
+
     public function clearParams() {
         $this->params = array();
     }
-
+    
+    public function addParam($key, $value) {
+        $this->params[urlencode($key)] = urlencode($value);
+    }
+    
     public function doRequest() {
         $defaults = array(
             CURLOPT_URL => $this->getString(),
@@ -35,8 +39,8 @@ class GoogleApi {
         curl_close($ch);
         return $this->lastResult;
     }
-
-    private function getQueryFromParams() {
+    
+    protected function getQueryFromParams() {
         $query = "?";
         $count = count($this->params);
         $i = 0;
@@ -45,14 +49,6 @@ class GoogleApi {
         }
         $query .= "key=" . $this->key;
         return $query;
-    }
-
-    private function getString() {
-        return 'https://maps.googleapis.com/maps/api/distancematrix/json' . $this->getQueryFromParams();
-    }
-
-    public function addParam($key, $value) {
-        $this->params[$key] = $value;
     }
 
 }
