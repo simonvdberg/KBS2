@@ -10,13 +10,16 @@ require("autoload.php");
 </html>
 
 <?php
-    include "model/Koerier.php";
-    include "model/Tarief.php";
-    
-    $fietsKoerier = new model/Koerier("Fietskoerier",  array(
-        new model/Tarief(9, 0, 4),
-        new model/Tarief(14, 0, 8),
-        new model/Tarief(19, 0, 12),
-        new model/Tarief(15, 0.56, 12),
-        ) );
-    $fietsKoerier->berekenTarief();
+
+use model\Model;
+use model\Koerier;
+use model\Tarief;
+
+$fietsKoerier = new Koerier("Fietskoerier", array(
+    new Tarief(9, 0, 4),
+    new Tarief(14, 0, 8),
+    new Tarief(19, 0, 12),
+    new Tarief(15, 0.56, 0)
+        ));
+
+echo $fietsKoerier->berekenTarief(4);

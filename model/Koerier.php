@@ -21,11 +21,11 @@ class Koerier extends Model {
     }
 
     function berekenTarief($aantalKilometers) {
-
         foreach ($this->tarieven as $tarief) {
-            if($aantalKilometers < $tarief->getMaximumAantalKilometers()){
+            if ($aantalKilometers <= $tarief->getMaximumAantalKilometers()) {
                 return $tarief->getVastePrijs();
             }
         }
+        return $tarief->getVastePrijs() + $tarief->getKilometerTarief() * $aantalKilometers;
     }
 }
