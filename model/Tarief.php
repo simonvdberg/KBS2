@@ -19,10 +19,10 @@ class Tarief extends Model {
     private $kilometerTarief;
     private $maximumAantalKilometers;
     
-    function __construct($vastePrijs, $kilometerTarief, $maximumAantalKilomets) {
+    function __construct($vastePrijs, $kilometerTarief, $maximumAantalKilometers) {
         $this->vastePrijs = $vastePrijs;
         $this->kilometerTarief = $kilometerTarief;
-        $this->maximumAantalKilometers = $maximumAantalKilomets;
+        $this->maximumAantalKilometers = $maximumAantalKilometers;
     }
     
     function getVastePrijs() {
@@ -33,7 +33,7 @@ class Tarief extends Model {
         return $this->kilometerTarief;
     }
 
-    function getMaximumAantalKilomets() {
+    function getMaximumAantalKilometers() {
         return $this->maximumAantalKilometers;
     }
 
@@ -45,7 +45,7 @@ class Tarief extends Model {
         $this->kilometerTarief = $kilometerTarief;
     }
 
-    function setMaximumAantalKilomets($maximumAantalKilomets) {
-        $this->maximumAantalKilometers = $maximumAantalKilomets;
+    function setMaximumAantalKilometers($maximumAantalKilometers) {
+        $this->maximumAantalKilometers = $maximumAantalKilometers;
     }
 }
