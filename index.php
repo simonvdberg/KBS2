@@ -1,3 +1,6 @@
+<?php
+require("autoload.php");
+?>
 <html>
     <form action="result.php" method="post">
         Vertrekpunt: <input name="origin" /><br />
