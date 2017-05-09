@@ -29,6 +29,7 @@ class GoogleDistanceApi extends GoogleApi {
         $distanceMatrix->addParam("units", "metrics");
         $distanceMatrix->addParam("mode", "bicycling");
         $res = json_decode($distanceMatrix->doRequest());
+        //autowaarde berekenen
         return $res->rows[0]->elements[0]->distance->value;
     }
 
@@ -39,6 +40,7 @@ class GoogleDistanceApi extends GoogleApi {
         $distanceMatrix->addParam("units", "metrics");
         $res = json_decode($distanceMatrix->doRequest());
 //        var_dump($distanceMatrix->doRequest());
+//        Fietskoerier meenemn
         return $res->rows[0]->elements[0]->distance->value;
     }
     
