@@ -1,0 +1,44 @@
+<?php
+
+namespace modules;
+
+class DBManager {
+
+    protected $username;
+    protected $password;
+    protected $datbase;
+    protected $host;
+    protected $port;
+    private $db;
+    private static $_instance;
+
+    public function __construct($host, $username, $password, $dbname) {
+        $this->db = new \mysqli($host, $username, $password, $dbname);
+    }
+
+    static function getInstance() {
+        if (self::$_instance == null) {
+            self::$_instance = new self("localhost", "kbs", "password", "TZT");
+        }
+        return self::$_instance;
+    }
+
+    public function selectQuery($query) {
+        $res = $this->db->query($query);
+        return $res->fetch_assoc();
+    }
+
+    public function insertQuery($query) {
+        $this->db->query($query);
+        return $this->db->insert_id;
+    }
+
+    public function deleteQuery($query) {
+        $this->db->query($query);
+    }
+    
+    public function updateQuery($query){
+        $this->db->query($query);
+    }
+
+}
