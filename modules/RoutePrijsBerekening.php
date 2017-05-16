@@ -32,7 +32,7 @@ class RoutePrijsBerekening {
         $laagsteTarief = 0;
         foreach ($koeriersMetTarieven as $koerierMetTarief) {
             $berekendTarief = $koerierMetTarief->berekenTarief($aantalKilometers);
-            if(0 === $laagsteTarief){
+            if (0 === $laagsteTarief) {
                 $laagsteTarief = $berekendTarief;
             }
             if ($laagsteTarief > $berekendTarief) {
@@ -40,6 +40,15 @@ class RoutePrijsBerekening {
             }
         }
         return $laagsteTarief;
+    }
+
+    function berekenTariefVoorKlant($afstandNaarStation1, $afstandNaarStation2, $afstandPerBus) {
+        $prijsDirecteKoerier = $this->berekenGoedKoopsteRoute($afstandPerBus);
+        $prijsViaTreinReiziger = $this->berekenGoedKoopsteRoute($afstandNaarStation1) + $this->berekenGoedKoopsteRoute($afstandNaarStation2) + 3;
+        if ($prijsViaTreinReiziger > $prijsDirecteKoerier) {
+            return $prijsDirecteKoerier * 1.2;
+        }
+        return $prijsViaTreinReiziger * 1.2;
     }
 
 }

@@ -17,8 +17,9 @@ echo "Station naar eind: " . $afstandNaarStation2 . "km<br>";
 echo "Direct: " . $afstandPerBus . "km<br>";
 
 $routePrijsBerekening = new RoutePrijsBerekening();
-echo "Prijs naar beginstation: " .$routePrijsBerekening->berekenGoedKoopsteRoute($afstandNaarStation1) . " EU <br>";
-echo "Prijs vanaf eindstation: " .$routePrijsBerekening->berekenGoedKoopsteRoute($afstandNaarStation2) . " EU <br>";
-echo "Prijs voor directe rit per koerier:  " .$routePrijsBerekening->berekenGoedKoopsteRoute($afstandPerBus) . " EU <br>";
+echo "Prijs naar beginstation: " . $routePrijsBerekening->berekenGoedKoopsteRoute($afstandNaarStation1) . " EU <br>";
+echo "Prijs vanaf eindstation: " . $routePrijsBerekening->berekenGoedKoopsteRoute($afstandNaarStation2) . " EU <br>";
+echo "Prijs voor directe rit per koerier:  " . $routePrijsBerekening->berekenGoedKoopsteRoute($afstandPerBus) . " EU <br>";
+echo "Prijs voor klant voor de rit " . $routePrijsBerekening->berekenTariefVoorKlant($afstandNaarStation1, $afstandNaarStation2, $afstandPerBus) . " EU <br>";
 exit();
 ?>  
