@@ -15,10 +15,14 @@ namespace model;
  */
 class Traject extends Model {
 
-    private $startpunt;
-    private $eindpunt;
-    private $vergoeding;
-
+    protected $startpunt;
+    protected $eindpunt;
+    protected $vergoeding;
+    
+    public function __construct() {
+        parent::__construct();
+    }
+    
     function getStartpunt() {
         return $this->startpunt;
     }

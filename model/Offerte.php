@@ -4,8 +4,12 @@ namespace model;
 
 class Offerte extends Model {
 
-    private $bedrag;
+    protected $bedrag;
 
+    public function __construct() {
+        parent::__construct();
+    }
+    
     function getBedrag() {
         return $this->bedrag;
     }

@@ -6,12 +6,16 @@ use model\Model;
 
 class Pakket extends Model {
 
-    private $lengte;
-    private $breedte;
-    private $hoogte;
-    private $gewicht;
-    private $referentie;
+    protected $lengte;
+    protected $breedte;
+    protected $hoogte;
+    protected $gewicht;
+    protected $referentie;
 
+    public function __construct() {
+        parent::__construct();
+    }
+    
     function getLengte() {
         return $this->lengte;
     }
