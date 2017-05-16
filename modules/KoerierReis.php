@@ -17,11 +17,12 @@ use modules\Google\GoogleDistanceApi;
  */
 class KoerierReis {
     
-    private function getDistanceBetweenTwoPoints($origin, $destination){
+    private function getDistanceBetweenTwoPoints($origin, $destination, $mode="default"){
         $distanceMatrix = new GoogleDistanceApi();
         $distanceMatrix->addParam("origins", $origin);
         $distanceMatrix->addParam("destinations", $destination);
         $distanceMatrix->addParam("units", "metrics");
+        $distanceMatrix->addParam("mode", $mode);
         $res = json_decode($distanceMatrix->doRequest());
         return $res->rows[0]->elements[0]->distance->value;
     }

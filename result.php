@@ -11,10 +11,13 @@ $koerierReis = new KoerierReis();
 
 $afstandNaarStation1 = $treinReis->berekenAfstand($_POST['origin']);
 $afstandNaarStation2 = $treinReis->berekenAfstand($_POST['destination']);
-$afstandPerBus = $koerierReis->berekenAfstand($_POST['origin'], $_POST['destination']);
+$afstandPerBus = $koerierReis->berekenAfstand($_POST['origin'], $_POST['destination'], "driving");
+$afstandPerFiets = $koerierReis->berekenAfstand($_post['origin'], $_Post['destination'], "bycicling");
 echo "Begin naar station: " . $afstandNaarStation1 . "km<br>";
 echo "Station naar eind: " . $afstandNaarStation2 . "km<br>";
-echo "Direct: " . $afstandPerBus . "km<br>";
+
+echo "Direct per bus: " . $afstandPerBus . "km<br>";
+echo "Direct per fiets: " . $afstandPerFiets . "km<br>";
 
 $routePrijsBerekening = new RoutePrijsBerekening();
 echo "Prijs naar beginstation: " . $routePrijsBerekening->berekenGoedKoopsteRoute($afstandNaarStation1) . " EU <br>";

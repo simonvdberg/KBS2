@@ -22,7 +22,7 @@ class TreinReis {
         return $res->results[0]->geometry->location;
     }
 
-    private function getDistanceToStation($origin) {
+    private function getDistanceToStation($origin, $mode="default") {
         $geoCoding = new GoogleGeocodingApi();
         //punten om zetten naar coordinaten
         $coordsBegin = $geoCoding->getCoordsFromAdress($origin);
@@ -33,7 +33,7 @@ class TreinReis {
         $distanceMatrix->addParam("origins", $coordsBegin->lat . "," . $coordsBegin->lng);
         $distanceMatrix->addParam("destinations", $coordsStation->lat . "," . $coordsStation->lng);
         $distanceMatrix->addParam("units", "metrics");
-        $distanceMatrix->addParam("mode", "bicycling");
+        $distanceMatrix->addParam("mode", $mode);
         $res = json_decode($distanceMatrix->doRequest());
         //autowaarde berekenen
         return $res->rows[0]->elements[0]->distance->value;
