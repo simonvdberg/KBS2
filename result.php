@@ -24,9 +24,12 @@ echo "Direct per fiets: " . $afstandPerFietsDirect . "km<br>";
 
 $routePrijsBerekening = new RoutePrijsBerekening();
 $goedkoopsteVanafBeginStation = $routePrijsBerekening->berekenGoedKoopsteRoute($afstandNaarStation1PerAuto, $afstandNaarStation1PerFiets);
-echo "Prijs naar beginstation: " . $routePrijsBerekening->berekenGoedKoopsteRoute($afstandNaarStation1PerAuto, $afstandNaarStation1PerFiets) . " EU <br>";
-echo "Prijs vanaf eindstation: " . $routePrijsBerekening->berekenGoedKoopsteRoute($afstandNaarStation2PerAuto, $afstandNaarStation2PerFiets) . " EU <br>";
-echo "Prijs voor directe rit per koerier:  " . $routePrijsBerekening->berekenGoedKoopsteRoute($afstandPerAutoDirect, $afstandPerFietsDirect) . " EU <br>";
+$goedkoopsteVanafEindStation = $routePrijsBerekening->berekenGoedKoopsteRoute($afstandNaarStation2PerAuto, $afstandNaarStation2PerFiets);
+$goedkoopsteDirecteRit = $routePrijsBerekening->berekenGoedKoopsteRoute($afstandPerAutoDirect, $afstandPerFietsDirect);
+echo "Prijs naar beginstation: " . $goedkoopsteVanafBeginStation . " EU <br>";
+echo "Prijs vanaf eindstation: " . $goedkoopsteVanafEindStation . " EU <br>";
+echo "Prijs voor directe rit per koerier:  " . $goedkoopsteDirecteRit . " EU <br>";
+echo "Berekening goedkoopste route per treinreiziger: ( ". $goedkoopsteVanafBeginStation . " + " . $goedkoopsteVanafEindStation . " + 3 ) x 1,2 = " . ((3+$goedkoopsteVanafBeginStation+$goedkoopsteVanafEindStation)*1.2) . " EU <br>";
 echo "Prijs voor klant voor de rit " . $routePrijsBerekening->berekenTariefVoorKlant($afstandNaarStation1PerAuto, $afstandNaarStation2PerAuto, $afstandPerAutoDirect, $afstandNaarStation1PerFiets, $afstandNaarStation2PerFiets, $afstandPerFietsDirect) . " EU <br>";
 exit();
 ?>  
