@@ -18,14 +18,18 @@ class DBManager {
 
     static function getInstance() {
         if (self::$_instance == null) {
-            self::$_instance = new self("localhost", "kbs", "password", "TZT");
+            self::$_instance = new self("localhost", "root", "", "TZT");
         }
         return self::$_instance;
     }
 
     public function selectQuery($query) {
         $res = $this->db->query($query);
-        return $res->fetch_assoc();
+        $rows = [];
+        while ($row = $res->fetch_assoc()) {
+            $rows[] = $row;
+        }
+        return $rows;
     }
 
     public function insertQuery($query) {
@@ -36,8 +40,8 @@ class DBManager {
     public function deleteQuery($query) {
         $this->db->query($query);
     }
-    
-    public function updateQuery($query){
+
+    public function updateQuery($query) {
         $this->db->query($query);
     }
 

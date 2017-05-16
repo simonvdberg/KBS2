@@ -21,7 +21,7 @@ $db->selectQuery('SELECT * FROM Klant');
 </html>
 
 <?php
-$db->selectQuery("SELECT * FROM koerier");
+var_dump($db->selectQuery("SELECT * FROM Koerier"));
 $fietsKoerier = new Koerier("Fietskoerier", array(
     new Tarief(9, 0, 4),
     new Tarief(14, 0, 8),
