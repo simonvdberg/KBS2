@@ -4,8 +4,12 @@ namespace model;
 
 class Aanvrager extends Model {
 
-    private $naam;
+    protected $naam;
 
+    public function __construct() {
+        parent::__construct();
+    }
+    
     function getNaam() {
         return $this->naam;
     }

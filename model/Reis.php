@@ -4,9 +4,13 @@ namespace model;
 
 class Reis extends Model {
 
-    private $startstation;
-    private $eindstation;
+    protected $startstation;
+    protected $eindstation;
 
+    public function __construct() {
+        parent::__construct();
+    }
+    
     function getStartstation() {
         return $this->startstation;
     }

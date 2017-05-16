@@ -9,8 +9,12 @@ namespace model;
  */
 class Factuur extends Model {
 
-    private $betaald;
-    private $datum;
+    protected $betaald;
+    protected $datum;
+
+    public function __construct() {
+        parent::__construct();
+    }
 
     function getBetaald() {
         return $this->betaald;

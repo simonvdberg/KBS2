@@ -4,9 +4,13 @@ namespace model;
 
 class Bezorgopdracht {
 
-    private $startpunt;
-    private $eindpunt;
+    protected $startpunt;
+    protected $eindpunt;
 
+    public function __construct() {
+        parent::__construct();
+    }
+    
     function getStartpunt() {
         return $this->startpunt;
     }

@@ -4,12 +4,13 @@ namespace model;
 
 class Koerier extends Model {
 
-    private $naam;
-    private $tarieven = array();
+    protected $naam;
+    protected $tarieven = array();
 
     function __construct($naam, $tarieven) {
         $this->naam = $naam;
         $this->tarieven = $tarieven;
+        parent::__construct();
     }
 
     function getNaam() {

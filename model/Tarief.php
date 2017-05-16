@@ -15,14 +15,16 @@ namespace model;
  */
 class Tarief extends Model {
     //put your code here
-    private $vastePrijs;
-    private $kilometerTarief;
-    private $maximumAantalKilometers;
+    protected $vastePrijs;
+    protected $kilometerTarief;
+    protected $maximumAantalKilometers;
+    
     
     function __construct($vastePrijs, $kilometerTarief, $maximumAantalKilometers) {
         $this->vastePrijs = $vastePrijs;
         $this->kilometerTarief = $kilometerTarief;
         $this->maximumAantalKilometers = $maximumAantalKilometers;
+        parent::__construct();
     }
     
     function getVastePrijs() {
