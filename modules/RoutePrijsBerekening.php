@@ -8,12 +8,16 @@
 
 namespace modules;
 
+use model\Tarief;
+use model\Koerier;
+
 /**
  * Description of RoutePrijsBerekening
  *
  * @author svdberg
  */
 class RoutePrijsBerekening {
+
     function berekenGoedKoopsteRoute($aantalKilometers) {
         $db = DBManager::getInstance();
         $koeriers = $db->selectQuery("SELECT * FROM Koerier");
@@ -23,14 +27,19 @@ class RoutePrijsBerekening {
                 $tarieven[] = new Tarief($tarief["vastePrijs"], $tarief["kilometerTarief"], $tarief["maximumAantalKilometers"]);
             }
             $koeriersMetTarieven[] = new Koerier($koerier["naam"], $tarieven);
+            $tarieven = array();
         }
-        $laagsteTarief = null;
+        $laagsteTarief = 0;
         foreach ($koeriersMetTarieven as $koerierMetTarief) {
             $berekendTarief = $koerierMetTarief->berekenTarief($aantalKilometers);
-            if ($laagsteTarief < $berekendTarief) {
+            if(0 === $laagsteTarief){
+                $laagsteTarief = $berekendTarief;
+            }
+            if ($laagsteTarief > $berekendTarief) {
                 $laagsteTarief = $berekendTarief;
             }
         }
         return $laagsteTarief;
     }
+
 }
