@@ -12,8 +12,8 @@ class DBManager {
     private $db;
     private static $_instance;
 
-    public function __construct($host, $username, $password, $dbname) {
-        $this->db = new \mysqli($host, $username, $password, $dbname);
+    public function __construct($host, $username, $password, $dbname, $port) {
+        $this->db = new \mysqli($host, $username, $password, $dbname, $port);
     }
 
     static function getInstance() {
