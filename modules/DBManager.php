@@ -18,7 +18,7 @@ class DBManager {
 
     static function getInstance() {
         if (self::$_instance == null) {
-            self::$_instance = new self("localhost", "root", "", "TZT");
+            self::$_instance = new self("localhost", "root", "", "TZT", 3307);
         }
         return self::$_instance;
     }
