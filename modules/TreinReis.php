@@ -16,8 +16,9 @@ class TreinReis {
     private function getNearestStation($location) {
         $placesApi = new GooglePlacesApi();
         $placesApi->addParam("location", $location);
-        $placesApi->addParam("radius", "2500"); //kijken vanaf waar kijken voor een station geen zin heeft
-        $placesApi->addParam("types", "train_station");
+        $placesApi->addParam("rankby", "distance");
+        $placesApi->addParam("radius", "50000"); //kijken vanaf waar kijken voor een station geen zin heeft
+        $placesApi->addParam("type", "train_station");
         $res = json_decode($placesApi->doRequest());
         return $res->results[0]->geometry->location;
     }
