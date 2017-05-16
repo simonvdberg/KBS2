@@ -45,4 +45,8 @@ class DBManager {
         $this->db->query($query);
     }
 
+    public function escape_string($string){
+        return $this->db->escape_string($string);
+    }
+    
 }
