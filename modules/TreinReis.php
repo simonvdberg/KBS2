@@ -39,8 +39,8 @@ class TreinReis {
         return $res->rows[0]->elements[0]->distance->value;
     }
 
-    public function berekenAfstand($location){
-        return $this->getDistanceToStation($location)/1000;
+    public function berekenAfstand($location, $mode){
+        return $this->getDistanceToStation($location, $mode)/1000;
     }
     
 }

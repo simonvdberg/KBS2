@@ -6,10 +6,12 @@ class Koerier extends Model {
 
     protected $naam;
     protected $tarieven = array();
+    protected $isFietsKoerier;
 
-    function __construct($naam, $tarieven) {
+    function __construct($naam, $tarieven, $isFietsKoerier) {
         $this->naam = $naam;
         $this->tarieven = $tarieven;
+        $this->isFietsKoerier = $isFietsKoerier;
         parent::__construct();
     }
 
@@ -20,7 +22,11 @@ class Koerier extends Model {
     function setNaam($naam) {
         $this->naam = $naam;
     }
-
+    
+    function getIsFietsKoerier(){
+        return $this->isFietsKoerier;
+    }
+    
     function berekenTarief($aantalKilometers) {
         foreach ($this->tarieven as $tarief) {
             if ($aantalKilometers <= $tarief->getMaximumAantalKilometers()) {

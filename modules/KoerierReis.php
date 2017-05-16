@@ -27,7 +27,7 @@ class KoerierReis {
         return $res->rows[0]->elements[0]->distance->value;
     }
     
-    public function berekenAfstand($begin, $eind){
-        return $this->getDistanceBetweenTwoPoints($begin, $eind)/1000;
+    public function berekenAfstand($begin, $eind, $mode){
+        return $this->getDistanceBetweenTwoPoints($begin, $eind, $mode)/1000;
     }
 }
