@@ -1,7 +1,6 @@
 <?php
 namespace modules\Google;
 
-//require_once('GoogleApi.php');
 /**
  * Description of GooglePlacesApi
  *

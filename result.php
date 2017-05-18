@@ -6,6 +6,9 @@ use modules\TreinReis;
 use modules\KoerierReis;
 use modules\RoutePrijsBerekening;
 
+ini_set('display_startup_errors', 1);
+ini_set('display_errors', 1);
+error_reporting(-1);
 $treinReis = new TreinReis();
 $koerierReis = new KoerierReis();
 

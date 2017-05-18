@@ -17,10 +17,13 @@ class TreinReis {
         $placesApi = new GooglePlacesApi();
         $placesApi->addParam("location", $location);
         $placesApi->addParam("rankby", "distance");
-        $placesApi->addParam("radius", "50000"); //kijken vanaf waar kijken voor een station geen zin heeft
+//        $placesApi->addParam("radius", "50000"); //kijken vanaf waar kijken voor een station geen zin heeft
         $placesApi->addParam("type", "train_station");
         $res = json_decode($placesApi->doRequest());
-        return $res->results[0]->geometry->location;
+        $resLocation = $res->results[0]->geometry->location;
+        var_dump($res);
+        exit();
+        return $resLocation;
     }
 
     private function getDistanceToStation($origin, $mode="default") {
