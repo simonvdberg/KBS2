@@ -14,16 +14,22 @@ use Exception;
 class TreinReis {
 
     private function getNearestStation($location) {
+        var_dump($location);
         $placesApi = new GooglePlacesApi();
         $placesApi->addParam("location", $location);
         //$placesApi->addParam("rankby", "distance");
-        $placesApi->addParam("radius", "2000"); //kijken vanaf waar kijken voor een station geen zin heeft
+        $placesApi->addParam("radius", "500000"); //kijken vanaf waar kijken voor een station geen zin heeft
         $placesApi->addParam("type", "train_station");
         $res = json_decode($placesApi->doRequest());
-        if($res->status == "INVALID_REQUEST"){
-            throw new Exception("INVALID_REQUEST");
+        $apiResult = $res->results[0]->geometry->location;
+        if($res->status == "INVALID_REQUEST" || null == $apiResult){
+            if($res->status == "ZERO_RRESULTS"){
+                throw new Exception("ZERO RESULTS");
+            }
+            var_dump($apiResult);
+            throw new Exception("INVALID_REQUEST or $apiResult is NULL");
         }
-        return $res->results[0]->geometry->location;
+        return $apiResult;
     }
 
     private function getDistanceToStation($origin, $mode="default") {
@@ -33,6 +39,7 @@ class TreinReis {
 
         $coordsStation = $this->getNearestStation($coordsBegin->lat . "," . $coordsBegin->lng);
 
+        var_dump($coordsStation);
         $distanceMatrix = new GoogleDistanceApi();
         $distanceMatrix->addParam("origins", $coordsBegin->lat . "," . $coordsBegin->lng);
         $distanceMatrix->addParam("destinations", $coordsStation->lat . "," . $coordsStation->lng);
