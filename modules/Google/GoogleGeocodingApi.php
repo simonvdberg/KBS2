@@ -2,6 +2,8 @@
 
 namespace modules\Google;
 
+use Exception;
+
 /**
  * Description of GoogleGeocodingApi
  *
@@ -18,7 +20,11 @@ class GoogleGeocodingApi extends GoogleApi {
     public function getCoordsFromAdress($adress) {
         $this->addParam("address", str_replace(' ', '', $adress));
         $res = $this->doRequest();
-        return json_decode($res)->results[0]->geometry->location;
+        $location = json_decode($res)->results[0]->geometry->location;
+        if($location === null){
+            throw new Exception("No location found for adress " . $adress);
+        }
+        return $location;
     }
 
 }

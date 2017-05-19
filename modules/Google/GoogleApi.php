@@ -2,6 +2,8 @@
 
 namespace modules\Google;
 
+use Exception;
+
 /**
  * Description of GoogleApi
  *
@@ -36,7 +38,9 @@ class GoogleApi {
         } else {
             $this->lastResult = $res;
         }
-        curl_close($ch);
+        if(json_decode($this->lastResult)->status === "INVALID_REQUEST"){
+            throw new Exception("There was an invalid request send tot Google " . $this->getString());
+        }
         return $this->lastResult;
     }
     
