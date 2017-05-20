@@ -14,7 +14,6 @@ use Exception;
 class TreinReis {
 
     private function getNearestStation($location) {
-        var_dump($location);
         $placesApi = new GooglePlacesApi();
         $placesApi->addParam("location", $location);
         //$placesApi->addParam("rankby", "distance");
@@ -26,7 +25,6 @@ class TreinReis {
             if($res->status == "ZERO_RRESULTS"){
                 throw new Exception("ZERO RESULTS");
             }
-            var_dump($apiResult);
             throw new Exception("INVALID_REQUEST or $apiResult is NULL");
         }
         return $apiResult;
@@ -39,7 +37,6 @@ class TreinReis {
 
         $coordsStation = $this->getNearestStation($coordsBegin->lat . "," . $coordsBegin->lng);
 
-        var_dump($coordsStation);
         $distanceMatrix = new GoogleDistanceApi();
         $distanceMatrix->addParam("origins", $coordsBegin->lat . "," . $coordsBegin->lng);
         $distanceMatrix->addParam("destinations", $coordsStation->lat . "," . $coordsStation->lng);

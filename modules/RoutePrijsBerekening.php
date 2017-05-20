@@ -10,6 +10,8 @@ namespace modules;
 
 use model\Tarief;
 use model\Koerier;
+use modules\TreinReis;
+use modules\KoerierReis;
 
 /**
  * Description of RoutePrijsBerekening
@@ -53,6 +55,40 @@ class RoutePrijsBerekening {
             return $prijsDirecteKoerier * 1.2;
         }
         return $prijsViaTreinReiziger * 1.2;
+    }
+
+    public function ajaxCall() {
+        if (isset($_POST['verzendAdres']) && isset($_POST['ontvangAdres'])) {
+            $treinReis = new TreinReis();
+            $koerierReis = new KoerierReis();
+            $verzendAdres = $_POST['verzendAdres'];
+            $ontvangAdres = $_POST['ontvangAdres'];
+            $afstandNaarStation1PerAuto = $treinReis->berekenAfstand($verzendAdres, "driving");
+            $afstandNaarStation2PerAuto = $treinReis->berekenAfstand($ontvangAdres, "driving");
+            $afstandNaarStation1PerFiets = $treinReis->berekenAfstand($verzendAdres, "bicycling");
+            $afstandNaarStation2PerFiets = $treinReis->berekenAfstand($ontvangAdres, "bicycling");
+            $afstandPerAutoDirect = $koerierReis->berekenAfstand($verzendAdres, $ontvangAdres, "driving");
+            $afstandPerFietsDirect = $koerierReis->berekenAfstand($verzendAdres, $ontvangAdres, "bicycling");
+
+            $routePrijsBerekening = new RoutePrijsBerekening();
+            $goedkoopsteVanafBeginStation = $routePrijsBerekening->berekenGoedKoopsteRoute($afstandNaarStation1PerAuto, $afstandNaarStation1PerFiets);
+            $goedkoopsteVanafEindStation = $routePrijsBerekening->berekenGoedKoopsteRoute($afstandNaarStation2PerAuto, $afstandNaarStation2PerFiets);
+            $goedkoopsteDirecteRit = $routePrijsBerekening->berekenGoedKoopsteRoute($afstandPerAutoDirect, $afstandPerFietsDirect);
+
+            $prijsTrein = $goedkoopsteVanafBeginStation + 3 + $goedkoopsteVanafEindStation;
+            if ($prijsTrein < $goedkoopsteDirecteRit) {
+                echo json_encode(array(
+                    "trein",
+                    $prijsTrein
+                ));
+            } else {
+                echo json_encode(array(
+                    "koerier",
+                    $goedkoopsteDirecteRit
+                ));
+            }
+            exit();
+        }
     }
 
 }
