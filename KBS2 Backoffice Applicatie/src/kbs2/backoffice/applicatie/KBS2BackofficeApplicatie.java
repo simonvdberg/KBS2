@@ -9,22 +9,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 /**
  *
  * @author svdberg
  */
 public class KBS2BackofficeApplicatie {
-
+    
     public static void main(String[] args) {
         try {
             ResultSet result = DatabaseHelper.voerQueryUit("SELECT * FROM Koerier");
-            while(result.next()){
+            while (result.next()) {
                 System.out.println(result.getString("naam"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(KBS2BackofficeApplicatie.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        Tabel tabel = new Tabel();
+        tabel.setVisible(true);
+        tabel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        tabel.setSize(550, 500);
+        tabel.setTitle("Te accoderen");
     }
-
+    
 }
