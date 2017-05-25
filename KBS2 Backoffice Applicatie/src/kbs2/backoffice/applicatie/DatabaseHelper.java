@@ -13,7 +13,13 @@ import java.sql.*;
  */
 public class DatabaseHelper {
 
-    public static Connection maakVerbinding() throws SQLException {
+    private static Connection maakVerbinding() throws SQLException {
         return DriverManager.getConnection("jdbc:mysql://localhost:3307/TZT", "root", "");
+    }
+
+    public static ResultSet voerQueryUit(String query) throws SQLException {
+        Statement statement = maakVerbinding().createStatement();
+        maakVerbinding().close();
+        return statement.executeQuery(query);
     }
 }
