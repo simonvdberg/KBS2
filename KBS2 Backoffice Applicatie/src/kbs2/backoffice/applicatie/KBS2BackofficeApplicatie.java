@@ -5,17 +5,22 @@
  */
 package kbs2.backoffice.applicatie;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author svdberg
  */
 public class KBS2BackofficeApplicatie {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        try {
+            DatabaseHelper.maakVerbinding();
+        } catch (SQLException ex) {
+            Logger.getLogger(KBS2BackofficeApplicatie.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+
 }

@@ -5,10 +5,15 @@
  */
 package kbs2.backoffice.applicatie;
 
+import java.sql.*;
+
 /**
  *
  * @author svdberg
  */
 public class DatabaseHelper {
-    
+
+    public static Connection maakVerbinding() throws SQLException {
+        return DriverManager.getConnection("jdbc:mysql://localhost:3307/TZT", "root", "");
+    }
 }
