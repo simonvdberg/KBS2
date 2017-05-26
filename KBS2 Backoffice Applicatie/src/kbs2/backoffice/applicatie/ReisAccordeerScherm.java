@@ -8,12 +8,8 @@ package kbs2.backoffice.applicatie;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,7 +19,7 @@ import javax.swing.JLabel;
  *
  * @author svdberg
  */
-public class ReisAccordeerScherm extends JFrame {
+public class ReisAccordeerScherm extends JFrame implements ActionListener{
 
     private JButton home;
     private JButton help;
@@ -35,7 +31,7 @@ public class ReisAccordeerScherm extends JFrame {
     private JLabel pakketreferentie;
     private JLabel klantGegevens;
 
-    public ReisAccordeerScherm() {
+    public ReisAccordeerScherm()  {
         setLayout(new GridBagLayout());
         GridBagConstraints grid = new GridBagConstraints();
         home = new JButton();
@@ -46,6 +42,7 @@ public class ReisAccordeerScherm extends JFrame {
         ImageIcon imageIcon = new ImageIcon(new ImageIcon("src\\icons\\home-icon.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
         home.setIcon(imageIcon);
         add(home, grid);
+        home.addActionListener(this);
         help = new JButton("help");
         grid.fill = GridBagConstraints.HORIZONTAL;
         grid.gridx = 0;
@@ -55,5 +52,14 @@ public class ReisAccordeerScherm extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(550, 500);
         setTitle("Accorderen uitgevoerde activiteiten");
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource().equals(home)){
+            dispose();
+            Tabel tabel = new Tabel();
+            tabel.setVisible(true);
+        }
     }
 }
