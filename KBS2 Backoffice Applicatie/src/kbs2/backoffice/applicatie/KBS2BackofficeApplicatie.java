@@ -29,9 +29,7 @@ public class KBS2BackofficeApplicatie {
         
         Tabel tabel = new Tabel();
         tabel.setVisible(true);
-        tabel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        tabel.setSize(550, 500);
-        tabel.setTitle("Te accoderen");
+ 
     }
     
 }

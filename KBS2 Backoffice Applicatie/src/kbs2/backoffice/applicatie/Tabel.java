@@ -6,9 +6,9 @@
 package kbs2.backoffice.applicatie;
 
 import java.awt.*;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -20,6 +20,18 @@ public class Tabel extends JFrame {
     String kolomNamen[] = {"Referentie", "Startpunt", "Eindpunt", "Afleverdag", "Deeltrajecten"};
 
     Object data[][] = {
+        {"1235123", "Barneveld", "Zwolle", "Donderdag", "3"},
+        {"1235123", "Barneveld", "Zwolle", "Donderdag", "3"},
+        {"1235123", "Barneveld", "Zwolle", "Donderdag", "3"},
+        {"1235123", "Barneveld", "Zwolle", "Donderdag", "3"},
+        {"1235123", "Barneveld", "Zwolle", "Donderdag", "3"},
+        {"1235123", "Barneveld", "Zwolle", "Donderdag", "3"},
+        {"1235123", "Barneveld", "Zwolle", "Donderdag", "3"},
+        {"1235123", "Barneveld", "Zwolle", "Donderdag", "3"},
+        {"1235123", "Barneveld", "Zwolle", "Donderdag", "3"},
+        {"1235123", "Barneveld", "Zwolle", "Donderdag", "3"},
+        {"1235123", "Barneveld", "Zwolle", "Donderdag", "3"},
+        {"1235123", "Barneveld", "Zwolle", "Donderdag", "3"},
         {"1235123", "Barneveld", "Zwolle", "Donderdag", "3"}
     };
 
@@ -27,13 +39,18 @@ public class Tabel extends JFrame {
 
     public Tabel() {
         model = new NietBewerkbaarModel(data, kolomNamen);
-        setLayout(new FlowLayout());             
+        setLayout(new FlowLayout());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(550, 500);
+        setTitle("Te accoderen");
         JTable table = new JTable();
         table.setModel(model);
-        table.setPreferredScrollableViewportSize(new Dimension(500, 50));
+        table.setPreferredScrollableViewportSize(new Dimension(500, 425));
         table.setFillsViewportHeight(true);
         table.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
-            System.out.println("TEST");
+            dispose();
+            ReisAccordeerScherm reisAccordeerScherm = new ReisAccordeerScherm();
+            reisAccordeerScherm.setVisible(true);
         });
 
         JScrollPane scrollPane = new JScrollPane(table);
