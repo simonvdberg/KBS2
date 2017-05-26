@@ -42,21 +42,9 @@ public class ReisAccordeerScherm extends JFrame {
         grid.fill = GridBagConstraints.HORIZONTAL;
         grid.gridx = 0;
         grid.gridy = 0;
-        try {
-            //TODO svdberg. Path werkt waarschijnlijk niet op Linux.
-            File file = new File("src\\icons\\home-icon.png");  
-            Image homeIcon = ImageIO.read(file);
-            home.setIcon(new ImageIcon(homeIcon));
-        } catch (IOException ex) {
-            Logger.getLogger(ReisAccordeerScherm.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        // try {
-        //    Image img = ImageIO.read(getClass().getResource("resources/water.bmp"));
-        //    home.setIcon(new ImageIcon(img));
-        //} catch (Exception ex) {
-        //  System.out.println(ex);
-        //}
+        //TODO svdberg. Path werkt waarschijnlijk niet op Linux.
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon("src\\icons\\home-icon.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        home.setIcon(imageIcon);
         add(home, grid);
         help = new JButton("help");
         grid.fill = GridBagConstraints.HORIZONTAL;
