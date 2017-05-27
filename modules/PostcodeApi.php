@@ -19,7 +19,7 @@ class PostcodeApi {
 // Indien de server geen TLS ondersteunt kun je met 
 // onderstaande optie een onveilige verbinding forceren.
 // Meestal is dit probleem te herkennen aan een lege response.
- curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 // De ruwe JSON response
         $response = curl_exec($curl);
 
@@ -29,16 +29,23 @@ class PostcodeApi {
         return $data;
     }
 
-    public function zoekAdres(){
-        if(isset($_POST['postcode']) && isset($_POST['huisnummer'])){
+    public function zoekAdres() {
+        if (isset($_POST['postcode']) && isset($_POST['huisnummer'])) {
             $data = $this->makeCall($_POST['postcode'], $_POST['huisnummer']);
-            $retVal = array(
-                'plaats' => $data->_embedded->addresses[0]->city->label,
-                'straat' => $data->_embedded->addresses[0]->street
-            );
-            echo json_encode($retVal);
+            if(isset($data->_embedded->addresses[0])) {
+                $retVal = array(
+                    'plaats' => $data->_embedded->addresses[0]->city->label,
+                    'straat' => $data->_embedded->addresses[0]->street
+                );
+                echo json_encode($retVal);
+            } else{
+                echo json_encode(array(
+                    'plaats' => "leeg",
+                    'straat' => "leeg"
+                ));
+            }
             exit();
         }
     }
-    
+
 }

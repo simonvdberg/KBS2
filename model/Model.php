@@ -7,7 +7,8 @@ use modules\DBManager;
 
 class Model {
 
-    private $db;
+    protected $db;
+    protected $pk;
 
     public function __construct() {
         $this->db = DBManager::getInstance();
@@ -20,8 +21,12 @@ class Model {
         $className = end($className);
 
         $properties = array();
+        $pk = $this->pk;
         foreach ($rClass->getProperties() as $property) {
-            if ($property->name != "db") {
+            if ($property->name === $pk && $this->$pk === null) {
+                continue;
+            }
+            if ($property->name != "db" && $property->name != "pk") {
                 $properties[] = $property->name;
             }
         }

@@ -32,6 +32,7 @@ class RoutePrijsBerekening {
             $tarieven = array();
         }
         $laagsteTarief = 0;
+        $koerier_id = null;
         foreach ($koeriersMetTarieven as $koerierMetTarief) {
             if ($koerierMetTarief->getIsFietsKoerier()) {
                 $berekendTarief = $koerierMetTarief->berekenTarief($aantalKilometersPerFiets);
@@ -40,12 +41,17 @@ class RoutePrijsBerekening {
             }
             if (0 === $laagsteTarief) {
                 $laagsteTarief = $berekendTarief;
+                $koerier_id = $koerierMetTarief->getKoerier_id();
             }
             if ($laagsteTarief > $berekendTarief) {
                 $laagsteTarief = $berekendTarief;
             }
         }
-        return $laagsteTarief;
+        $retVal = array(
+            "tarief" => $laagsteTarief,
+            "koerier_id" => $koerier_id
+        );
+        return $retVal;
     }
 
     function berekenTariefVoorKlant($afstandNaarStation1PerAuto, $afstandNaarStation2PerAuto, $afstandDirectPerAuto, $afstandNaarStation1PerFiets, $afstandNaarStation2PerFiets, $afstandDirectPerFiets) {
@@ -63,18 +69,26 @@ class RoutePrijsBerekening {
             $koerierReis = new KoerierReis();
             $verzendAdres = $_POST['verzendAdres'];
             $ontvangAdres = $_POST['ontvangAdres'];
-            $afstandNaarStation1PerAuto = $treinReis->berekenAfstand($verzendAdres, "driving");
-            $afstandNaarStation2PerAuto = $treinReis->berekenAfstand($ontvangAdres, "driving");
-            $afstandNaarStation1PerFiets = $treinReis->berekenAfstand($verzendAdres, "bicycling");
-            $afstandNaarStation2PerFiets = $treinReis->berekenAfstand($ontvangAdres, "bicycling");
+            $gegevensNaarStation1PerAuto = $treinReis->berekenAfstand($verzendAdres, "driving");
+            $gegevensNaarStation2PerAuto = $treinReis->berekenAfstand($ontvangAdres, "driving");
+            $gegevensNaarStation1PerFiets = $treinReis->berekenAfstand($verzendAdres, "bicycling");
+            $gegevensNaarStation2PerFiets = $treinReis->berekenAfstand($ontvangAdres, "bicycling");           
+            
+            
+            $afstandNaarStation1PerAuto = $gegevensNaarStation1PerAuto['distance'];
+            $afstandNaarStation2PerAuto = $gegevensNaarStation2PerAuto['distance'];
+            $afstandNaarStation1PerFiets = $gegevensNaarStation1PerFiets['distance'];
+            $afstandNaarStation2PerFiets = $gegevensNaarStation2PerFiets['distance'];
             $afstandPerAutoDirect = $koerierReis->berekenAfstand($verzendAdres, $ontvangAdres, "driving");
             $afstandPerFietsDirect = $koerierReis->berekenAfstand($verzendAdres, $ontvangAdres, "bicycling");
-
+           
+            //bij akkoord route opslaan
             $routePrijsBerekening = new RoutePrijsBerekening();
             $goedkoopsteVanafBeginStation = $routePrijsBerekening->berekenGoedKoopsteRoute($afstandNaarStation1PerAuto, $afstandNaarStation1PerFiets);
             $goedkoopsteVanafEindStation = $routePrijsBerekening->berekenGoedKoopsteRoute($afstandNaarStation2PerAuto, $afstandNaarStation2PerFiets);
             $goedkoopsteDirecteRit = $routePrijsBerekening->berekenGoedKoopsteRoute($afstandPerAutoDirect, $afstandPerFietsDirect);
 
+            
             $prijsTrein = $goedkoopsteVanafBeginStation + 3 + $goedkoopsteVanafEindStation;
             if ($prijsTrein < $goedkoopsteDirecteRit) {
                 echo json_encode(array(

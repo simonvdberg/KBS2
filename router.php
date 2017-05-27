@@ -6,7 +6,6 @@ if(isset($_SERVER['PATH_INFO']) && !empty($_SERVER['PATH_INFO'])) {
   $class = new $className();
 //    exit($className . ' ' . $method);
   $t = $class->$method();
-  var_dump($t);
   exit();
 }
 
