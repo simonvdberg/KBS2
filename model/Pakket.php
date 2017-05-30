@@ -57,9 +57,5 @@ class Pakket extends Model {
         $this->gewicht = $gewicht;
     }
     
-    public function saveToDatabase() {
-        $this->pakket_id = parent::saveToDatabase();
-        return $this;
-    }
     
 }

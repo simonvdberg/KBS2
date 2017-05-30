@@ -55,9 +55,8 @@ class TreinReis {
         $distanceMatrix->addParam("mode", $mode);
         $res = json_decode($distanceMatrix->doRequest());
         //autowaarde berekenen
-        var_dump($res);
         $apiResult = array(
-            "stationAdres" => $res->destination_adresses[0],
+            "stationAdres" => $res->destination_addresses[0],
             'distance' => $res->rows[0]->elements[0]->distance->value/1000
         );
         return $apiResult;

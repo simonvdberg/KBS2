@@ -68,6 +68,7 @@ $("document").ready(function() {
             $("input[name=resultaatAfleverAdres]").val(verzendAdres);
             $("#resultaat").css("display", "block");
             $("#waiting").css("display", "none");
+            $("#resApiCall").val(JSON.stringify(data));
         });
         let stap = $(this).data("stap");
         $(".pagina").css("display", "none");

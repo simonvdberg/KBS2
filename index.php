@@ -202,6 +202,7 @@ if (true) {
                                 </td>
                             </tr>
                         </table>
+                        <input type="hidden" name="resApiCall" id="resApiCall" />
                         <a href="#" class="changeStep" data-stap="4">Volgende stap</a>
                     </div>
                 </div>
