@@ -6,16 +6,21 @@ use model\Model;
 
 class Pakket extends Model {
 
+    protected $pakket_id;
     protected $lengte;
     protected $breedte;
     protected $hoogte;
     protected $gewicht;
-    protected $referentie;
 
     public function __construct() {
+        $this->pk = "pakket_id";
         parent::__construct();
     }
-    
+
+    function getPakket_id() {
+        return $this->pakket_id;
+    }
+
     function getLengte() {
         return $this->lengte;
     }
@@ -32,8 +37,8 @@ class Pakket extends Model {
         return $this->gewicht;
     }
 
-    function getReferentie() {
-        return $this->referentie;
+    function setPakket_id($pakket_id) {
+        $this->pakket_id = $pakket_id;
     }
 
     function setLengte($lengte) {
@@ -51,9 +56,10 @@ class Pakket extends Model {
     function setGewicht($gewicht) {
         $this->gewicht = $gewicht;
     }
-
-    function setReferentie($referentie) {
-        $this->referentie = $referentie;
+    
+    public function saveToDatabase() {
+        $this->pakket_id = parent::saveToDatabase();
+        return $this;
     }
-
+    
 }

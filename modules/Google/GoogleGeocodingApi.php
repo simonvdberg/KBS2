@@ -20,6 +20,9 @@ class GoogleGeocodingApi extends GoogleApi {
     public function getCoordsFromAdress($adress) {
         $this->addParam("address", str_replace(' ', '', $adress));
         $res = json_decode($this->doRequest());
+        if(count($res->results) === 0){
+            throw new Exception("No location found for adress " . $adress);
+        }
         $location = $res->results[0]->geometry->location;
         if($location === null){
             throw new Exception("No location found for adress " . $adress);
