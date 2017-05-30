@@ -5,6 +5,8 @@ namespace modules;
 use model\Pakket;
 use model\Traject;
 use model\Klant;
+use model\Bezorgopdracht;
+
 class OrderPakket {
 
     private $verzendAdres;
@@ -25,22 +27,47 @@ class OrderPakket {
             $pakket->setHoogte($this->pakketHoogte);
             $pakket->setLengte($this->pakketLengte);
             $pakket->setGewicht($this->pakketGewicht);
-//            $pakket->setPakket_id($pakket->saveToDatabase());
+            $pakket->setPakket_id($pakket->saveToDatabase());
 
-            
-            
-            $traject = new Traject();
-            $traject->setStartpunt($this->verzendAdres);
-            $traject->setEindpunt($this->ontvangAdres);
-            $traject->setEindpunt($this->ontvangAdres);
-            var_dump($traject);
+            $klant = new Klant();
+            $klant->setNaam($this->naam);
+            $klant->setKlant_id($klant->saveToDatabase());
+
+
+            $bezorgOpdracht = new Bezorgopdracht();
+            $bezorgOpdracht->setKlant_id($klant->getKlant_id());
+            $bezorgOpdracht->setPakket_id($pakket->getPakket_id());
+            $bezorgOpdracht->setStartpunt($this->verzendAdres);
+            $bezorgOpdracht->setEindpunt($this->ontvangAdres);
+            $bezorgOpdracht->setOpdracht_id($bezorgOpdracht->saveToDatabase());
+
             $resApiCall = json_decode($_POST['resApiCall']);
-            if(is_array($resApiCall[2])){
-//                foreach($resApiCall as $koerierId){
-//                    $
-//                }
+            var_dump($resApiCall);
+            if (is_array($resApiCall[2])) {
+                $trajectEen = new Traject();
+                $trajectEen->setStartpunt($this->verzendAdres);
+                $trajectEen->setEindpunt($resApiCall[3]);
+                $trajectEen->setKoerier_id($resApiCall[2][0]);
+                $trajectEen->setVergoeding(10);
+                $trajectEen->setTraject_id($trajectEen->saveToDatabase());
+                $trajectEen->maakTrajectDeel($bezorgOpdracht->getOpdracht_id());
+                $trajectTwee = new Traject();
+                $trajectTwee->setStartpunt($resApiCall[3]);
+                $trajectTwee->setEindpunt($this->ontvangAdres);
+                $trajectTwee->setKoerier_id($resApiCall[2][1]);
+                $trajectTwee->setVergoeding(10);
+                $trajectTwee->setTraject_id($trajectTwee->saveToDatabase());
+                $trajectTwee->maakTrajectDeel($bezorgOpdracht->getOpdracht_id());
+            } else {
+                $traject = new Traject();
+                $traject->setStartpunt($this->verzendAdres);
+                $traject->setEindpunt($this->ontvangAdres);
+                $traject->setTraject_id($traject->saveToDatabase());
+                $trajectEen->setKoerier_id($resApiCall[2]);
+                $traject->maakTrajectDeel($bezorgOpdracht->getOpdracht_id());
             }
-            
+            var_dump($traject);
+            var_dump($trajectEen);
             var_dump($_POST);
             exit();
         } else {
