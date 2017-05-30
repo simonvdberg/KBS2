@@ -42,7 +42,7 @@ public class Tabel extends JFrame {
         setLayout(new FlowLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(550, 500);
-        setTitle("Te accoderen");
+        setTitle("Te accorderen");
         JTable table = new JTable();
         table.setModel(model);
         table.setPreferredScrollableViewportSize(new Dimension(500, 425));
