@@ -3,7 +3,8 @@
 namespace modules;
 
 use model\Pakket;
-
+use model\Traject;
+use model\Klant;
 class OrderPakket {
 
     private $verzendAdres;
@@ -18,13 +19,31 @@ class OrderPakket {
 
     public function verwerkAanvraag() {
         if (isset($_POST) && $this->controleerAanvraag($_POST)) {
+            echo "<pre>";
             $pakket = new Pakket();
             $pakket->setBreedte($this->pakketBreedte);
             $pakket->setHoogte($this->pakketHoogte);
             $pakket->setLengte($this->pakketLengte);
             $pakket->setGewicht($this->pakketGewicht);
-            $pakket->saveToDatabase();
-        } else{
+//            $pakket->setPakket_id($pakket->saveToDatabase());
+
+            
+            
+            $traject = new Traject();
+            $traject->setStartpunt($this->verzendAdres);
+            $traject->setEindpunt($this->ontvangAdres);
+            $traject->setEindpunt($this->ontvangAdres);
+            var_dump($traject);
+            $resApiCall = json_decode($_POST['resApiCall']);
+            if(is_array($resApiCall[2])){
+//                foreach($resApiCall as $koerierId){
+//                    $
+//                }
+            }
+            
+            var_dump($_POST);
+            exit();
+        } else {
             exit("FOUT");
         }
     }
@@ -67,10 +86,6 @@ class OrderPakket {
             return false;
         }
 
-//    private $email;
-//    private $naam;
-//    private $telNr;
-        //klantgegevens
         if (filter_var($gegevens['klantgegevensEmail'], FILTER_VALIDATE_EMAIL)) {
             $this->email = $gegevens['klantgegevensEmail'];
         } else {

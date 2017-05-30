@@ -20,6 +20,7 @@ class Traject extends Model {
     protected $vergoeding;
     
     public function __construct() {
+        $this->pk = "traject_id";
         parent::__construct();
     }
     
