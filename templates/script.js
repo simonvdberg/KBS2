@@ -73,6 +73,7 @@ $("document").ready(function() {
         let stap = $(this).data("stap");
         $(".pagina").css("display", "none");
         $("#stap" + stap).css("display", "block");
+        disableNav(stap);
     });
     //Stap 2 naar 3
     $("#stap2 .changeStep").on("click", function(e) {
@@ -102,6 +103,7 @@ $("document").ready(function() {
             let stap = $(this).data("stap");
             $(".pagina").css("display", "none");
             $("#stap" + stap).css("display", "block");
+            disableNav(stap);
         }
     });
     //Stap 3 naar 4
@@ -109,12 +111,31 @@ $("document").ready(function() {
         let stap = $(this).data("stap");
         $(".pagina").css("display", "none");
         $("#stap" + stap).css("display", "block");
+        disableNav(stap);
     });
-    //Stap verdergaan
-    //        $("a.changeStep").on("click", function(e){
-    //e.preventDefault();
-    //        let stap = $(this).data("stap");
-    //        $(".pagina").css("display", "none");
-    //        $("#stap" + stap).css("display", "block");
-    //});
+//    Stap verdergaan
+            $("ul.nav a.changeStep").on("click", function(e){
+            e.preventDefault();
+            if($(this).hasClass("disabled")){
+                return;
+            }
+            let stap = $(this).data("stap");
+            $(".pagina").css("display", "none");
+            $("#stap" + stap).css("display", "block");
+            disableNav(stap);
+    });
 });
+
+function disableNav(stap){
+    $("ul.nav a.changeStep").each(function(){
+        thisStap = $(this).data("stap");
+        if(thisStap > stap){
+            $(this).addClass("disabled");
+        } else{
+            if(thisStap === stap){
+                $(this).addClass("active");
+            }
+            $(this).removeClass("disabled");
+        }
+    });
+}

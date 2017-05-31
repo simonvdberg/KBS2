@@ -21,7 +21,6 @@ class OrderPakket {
 
     public function verwerkAanvraag() {
         if (isset($_POST) && $this->controleerAanvraag($_POST)) {
-            echo "<pre>";
             $pakket = new Pakket();
             $pakket->setBreedte($this->pakketBreedte);
             $pakket->setHoogte($this->pakketHoogte);
@@ -42,7 +41,6 @@ class OrderPakket {
             $bezorgOpdracht->setOpdracht_id($bezorgOpdracht->saveToDatabase());
 
             $resApiCall = json_decode($_POST['resApiCall']);
-            var_dump($resApiCall);
             if (is_array($resApiCall[2])) {
                 $trajectEen = new Traject();
                 $trajectEen->setStartpunt($this->verzendAdres);
@@ -53,11 +51,17 @@ class OrderPakket {
                 $trajectEen->maakTrajectDeel($bezorgOpdracht->getOpdracht_id());
                 $trajectTwee = new Traject();
                 $trajectTwee->setStartpunt($resApiCall[3]);
-                $trajectTwee->setEindpunt($this->ontvangAdres);
-                $trajectTwee->setKoerier_id($resApiCall[2][1]);
-                $trajectTwee->setVergoeding(10);
+                $trajectTwee->setEindpunt($resApiCall[3]);
+                $trajectTwee->setVergoeding(3);
                 $trajectTwee->setTraject_id($trajectTwee->saveToDatabase());
                 $trajectTwee->maakTrajectDeel($bezorgOpdracht->getOpdracht_id());
+                $trajectDrie = new Traject();
+                $trajectDrie->setStartpunt($resApiCall[4]);
+                $trajectDrie->setEindpunt($this->ontvangAdres);
+                $trajectDrie->setKoerier_id($resApiCall[2][1]);
+                $trajectDrie->setVergoeding(10);
+                $trajectDrie->setTraject_id($trajectTwee->saveToDatabase());
+                $trajectDrie->maakTrajectDeel($bezorgOpdracht->getOpdracht_id());
             } else {
                 $traject = new Traject();
                 $traject->setStartpunt($this->verzendAdres);
@@ -66,10 +70,64 @@ class OrderPakket {
                 $trajectEen->setKoerier_id($resApiCall[2]);
                 $traject->maakTrajectDeel($bezorgOpdracht->getOpdracht_id());
             }
-            var_dump($traject);
-            var_dump($trajectEen);
-            var_dump($_POST);
-            exit();
+            ?>
+
+            <!doctype html>
+            <html>
+                <head>
+                    <script src="templates/jquery.js"></script>
+                    <script src="templates/script.js"></script>
+
+                    <link href="/templates/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+                    <script src="/templates/bootstrap/js/bootstrap.min.js"></script>
+                    <style>
+                        body{
+                            font-family: Helvetica
+                        }
+                        .pagina{
+                            display: none;
+                        }
+                        .pagina td{
+                            padding: 3px;
+                        }
+                        #stap1{
+                            display: block;
+                        }
+                        #resultaat{
+                            display: none;
+                        }
+                        #waiting{
+                            color: white;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container" style="text-align: center">
+                        <div class="col-md-3">
+
+                        </div>
+                        <div class="col-md-6">
+                            <h1>
+                                Hartelijk dank voor uw opdracht!
+                            </h1>
+                            Graag onderstaande referentie <br />
+                            duidelijk op uw pakket aanbrengen<br >
+                            <div>
+                                <?php
+                                echo $pakket->getPakket_id();
+                                ?>
+                            </div>
+                            <br />
+                            De bevestiging is verstuurd naar uw email adres:<br />
+                            <?php echo $this->email; ?>
+                            <br />
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                    </div>
+                </body>
+            </html>
+            <?php
         } else {
             exit("FOUT");
         }

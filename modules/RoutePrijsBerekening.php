@@ -101,7 +101,8 @@ class RoutePrijsBerekening {
                     "trein",
                     $prijsTrein,
                     $koerierArr,
-                    $gegevensNaarStation1PerAuto['stationAdres']
+                    $gegevensNaarStation1PerAuto['stationAdres'],
+                    $gegevensNaarStation2PerAuto['stationAdres']
                 ));
             } else {
                 echo json_encode(array(

@@ -45,7 +45,6 @@ class Model {
         }
         $query = "INSERT INTO `" . $this->db->escape_string($className) . "` (`" . implode("`,`", $properties) . "`) VALUES ('" . implode("','", $valList) . "')";
         $query .= " ON DUPLICATE KEY UPDATE " . $updateQuery;
-        echo $query . "\n";
         return $this->db->insertQuery($query);
     }
 
