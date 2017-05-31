@@ -5,15 +5,17 @@
  */
 package kbs2.backoffice.applicatie;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Image;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  *
@@ -21,52 +23,109 @@ import javax.swing.JLabel;
  */
 public class ReisAccordeerScherm extends JFrame implements ActionListener {
 
-    private JButton home;
-    private JButton help;
-    private JButton vorigPakket;
-    private JButton volgendePakket;
-    private JButton slaOpmerkingOp;
-    private JButton allesAccoderen;
-    private JLabel banner;
-    private JLabel pakketreferentie;
-    private JLabel klantGegevens;
+    private JTextField klantReferentie;
+    private JLabel klantReferentieLabel;
+    private JButton accordeerAlle;
 
+    private JTextArea klantGegevens;
+    private JLabel klantGegevensLabel;
+    private JButton pasAan;
+    
+    private JTextField opmerkingen;
+    private JLabel opmerkingenLabel;
+    private JButton voegOpmerkingToe;
+    
+    private JButton vorige;
+    private JButton hoofdscherm;
+    private JButton volgende;
+
+    private JPanel mainPanel;
+    private JPanel topPanel;
+    private JPanel botPanel;
+    private JPanel klantReferentiePanel;
+    private JPanel klantGegevensPanel;
+    private JPanel opmerkingenPanel;
+    
+    private TrajectRecord record;
+   
     public ReisAccordeerScherm() {
-        setLayout(new GridBagLayout());
-        GridBagConstraints grid = new GridBagConstraints();
-
-        home = new JButton();
-      //  grid.fill = GridBagConstraints.HORIZONTAL;
-        grid.gridx = 0;
-        grid.gridy = 0;
-
-        banner = new JLabel("Accorderen uitgevoerde activiteiten");
-      
-      //  grid.fill = GridBagConstraints.HORIZONTAL;
-        grid.gridx = 1;
-        grid.gridy = 0;
-          add(banner, grid);
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new GridLayout(3,0));
+        add(mainPanel);
         
-        //TODO svdberg. Path werkt waarschijnlijk niet op Linux.
-        ImageIcon homeIcon = new ImageIcon(new ImageIcon("src\\icons\\home-icon.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
-        home.setIcon(homeIcon);
-        add(home, grid);
-        home.addActionListener(this);
+        topPanel = new JPanel();
+        topPanel.setLayout(new GridLayout(0, 3));
+        mainPanel.add(topPanel);
+                
+        record = new TrajectRecord();
 
-        help = new JButton();
-    //    grid.fill = GridBagConstraints.HORIZONTAL;
-        grid.gridx = 2;
-        grid.gridy = 0;
-        add(help, grid);
+        record = new TrajectRecord();
+        mainPanel.add(record);
+        
+        botPanel = new JPanel();
+        botPanel.setLayout(new FlowLayout());
+        mainPanel.add(botPanel);
+        
+        klantReferentie = new JTextField(6);
+        klantReferentie.setEditable(false);
+        klantReferentie.setText("123123123");
 
+        klantReferentieLabel = new JLabel("Klantreferentie");
+
+        accordeerAlle = new JButton("Accordeer alle");
+
+        klantReferentiePanel = new JPanel();
+        klantReferentiePanel.setLayout(new GridLayout(3, 0));
+        klantReferentiePanel.add(klantReferentieLabel);
+        klantReferentiePanel.add(klantReferentie);
+        klantReferentiePanel.add(accordeerAlle);
+
+        klantGegevens = new JTextArea(3, 20);
+        klantGegevens.setEditable(false);
+        klantGegevens.setText("Piet Klaas\nZwolle\n01231234");
+       
+        klantGegevensLabel = new JLabel("Klantgegevens");
+        
+        pasAan = new JButton("Pas aan");
+        
+        klantGegevensPanel = new JPanel();
+        klantGegevensPanel.setLayout(new GridLayout(3,0));
+        klantGegevensPanel.add(klantGegevensLabel);
+        klantGegevensPanel.add(klantGegevens);
+        klantGegevensPanel.add(pasAan);
+        
+        opmerkingen = new JTextField(15);
+        
+        opmerkingenLabel = new JLabel("Opmerkingen");
+        
+        voegOpmerkingToe = new JButton("Voeg opmerking toe");
+        
+        opmerkingenPanel = new JPanel();
+        opmerkingenPanel.setLayout(new GridLayout(3,0));
+        opmerkingenPanel.add(opmerkingenLabel);
+        opmerkingenPanel.add(opmerkingen);
+        opmerkingenPanel.add(voegOpmerkingToe);
+        
+        topPanel.add(klantReferentiePanel);
+        topPanel.add(klantGegevensPanel);
+        topPanel.add(opmerkingenPanel);
+        
+        vorige = new JButton("< vorig te accorderen pakket");
+        hoofdscherm = new JButton("terug naar hoofdscherm");
+        volgende = new JButton("volgende te accorderen pakket >");
+        
+        botPanel.add(vorige);
+        botPanel.add(hoofdscherm);
+        botPanel.add(volgende);
+        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(550, 500);
-        setTitle("Accorderen uitgevoerde activiteiten");
+        setSize(1280, 500);
+        setTitle("TZT koeriersdienst: goedkoop en groen!");
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource().equals(home)) {
+        if (e.getSource().equals(klantReferentie)) {
             dispose();
             Tabel tabel = new Tabel();
             tabel.setVisible(true);
