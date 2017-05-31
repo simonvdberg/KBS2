@@ -5,7 +5,9 @@
  */
 package kbs2.backoffice.applicatie;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -34,6 +36,7 @@ public class ReisAccordeerScherm extends JFrame implements ActionListener {
     private JButton voegOpmerkingToe;
     
     private JButton vorige;
+    private JButton hoofdscherm;
     private JButton volgende;
 
     private JPanel mainPanel;
@@ -44,9 +47,7 @@ public class ReisAccordeerScherm extends JFrame implements ActionListener {
     private JPanel opmerkingenPanel;
     
     private TrajectRecord record;
-    
-
-    
+   
     public ReisAccordeerScherm() {
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(3,0));
@@ -110,9 +111,11 @@ public class ReisAccordeerScherm extends JFrame implements ActionListener {
         topPanel.add(opmerkingenPanel);
         
         vorige = new JButton("< vorig te accorderen pakket");
+        hoofdscherm = new JButton("terug naar hoofdscherm");
         volgende = new JButton("volgende te accorderen pakket >");
         
         botPanel.add(vorige);
+        botPanel.add(hoofdscherm);
         botPanel.add(volgende);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
