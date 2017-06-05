@@ -26,6 +26,8 @@ public class KBS2BackofficeApplicatie {
             Logger.getLogger(KBS2BackofficeApplicatie.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        Tabel.setTabelWaardes();
+        
         Tabel tabel = new Tabel();
         tabel.setVisible(true);
  
