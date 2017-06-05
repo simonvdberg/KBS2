@@ -112,24 +112,6 @@ if (true) {
                                         <input id="plaatsVerzender" disabled />
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        &nbsp; 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        &nbsp; 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        &nbsp; 
-                                    </td>
-                                    <td>
-                                        <a href="#" class="changeStep btn btn-primary" data-stap="2">Klaar, naar stap 2</a>
-                                    </td>
-                                </tr>
                             </table>
                         </div>
                         <div id="ontangDiv" class="col-md-6">
@@ -169,6 +151,10 @@ if (true) {
                                     </td>
                                 </tr>
                             </table>
+                            <br /><br />
+                            <a href="#" class="changeStep btn btn-primary" data-stap="2">
+                                Klaar, naar stap 2
+                            </a>
                         </div>
                     </div>
                     <div class="pagina" id="stap2">
@@ -379,7 +365,9 @@ if (true) {
                     </div>
                 </form>
             </div>
-
+            <div id="debugInfo" class="col-md-12">
+                
+            </div>
             <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">

@@ -48,12 +48,16 @@ class OrderPakket {
                 $trajectEen->setKoerier_id($resApiCall[2][0]);
                 $trajectEen->setVergoeding(10);
                 $trajectEen->setTraject_id($trajectEen->saveToDatabase());
+                var_dump($trajectEen);
                 $trajectEen->maakTrajectDeel($bezorgOpdracht->getOpdracht_id());
                 $trajectTwee = new Traject();
                 $trajectTwee->setStartpunt($resApiCall[3]);
-                $trajectTwee->setEindpunt($resApiCall[3]);
+                $trajectTwee->setEindpunt($resApiCall[4]);
+                $trajectEen->setKoerier_id(4);
                 $trajectTwee->setVergoeding(3);
-                $trajectTwee->setTraject_id($trajectTwee->saveToDatabase());
+                $traj_id = $trajectTwee->saveToDatabase();
+                $trajectTwee->setTraject_id($traj_id);
+                var_dump($trajectTwee);
                 $trajectTwee->maakTrajectDeel($bezorgOpdracht->getOpdracht_id());
                 $trajectDrie = new Traject();
                 $trajectDrie->setStartpunt($resApiCall[4]);
@@ -62,6 +66,7 @@ class OrderPakket {
                 $trajectDrie->setVergoeding(10);
                 $trajectDrie->setTraject_id($trajectTwee->saveToDatabase());
                 $trajectDrie->maakTrajectDeel($bezorgOpdracht->getOpdracht_id());
+                var_dump($trajectDrie);
             } else {
                 $traject = new Traject();
                 $traject->setStartpunt($this->verzendAdres);

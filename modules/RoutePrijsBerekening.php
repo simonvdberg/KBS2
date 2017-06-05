@@ -37,11 +37,18 @@ class RoutePrijsBerekening {
         $laagsteTarief = 0;
         $koerier_id = null;
         foreach ($koeriersMetTarieven as $koerierMetTarief) {
+            //hack om treinkoerier over te slaan
+            if($koerierMetTarief->getKoerier_id() === 4){
+                continue;
+            }
             if ($koerierMetTarief->getIsFietsKoerier()) {
+                $newArr['koerier'] = "Fiets";
                 $berekendTarief = $koerierMetTarief->berekenTarief($aantalKilometersPerFiets);
             } else {
+                $newArr['koerier'] = "Auto";
                 $berekendTarief = $koerierMetTarief->berekenTarief($aantalKilometersPerAuto);
             }
+            $newArr['prijs'] = $berekendTarief;
             if (0 === $laagsteTarief) {
                 $laagsteTarief = $berekendTarief;
                 $koerier_id = $koerierMetTarief->getKoerier_id();
@@ -50,10 +57,12 @@ class RoutePrijsBerekening {
                 $laagsteTarief = $berekendTarief;
                 $koerier_id = $koerierMetTarief->getKoerier_id();
             }
+            $koerierGegevens[] = $newArr;
         }
         $retVal = array(
             "tarief" => $laagsteTarief,
-            "koerier_id" => $koerier_id
+            "koerier_id" => $koerier_id,
+            "prijzen" => $koerierGegevens
         );
         return $retVal;
     }
@@ -77,7 +86,6 @@ class RoutePrijsBerekening {
             $gegevensNaarStation2PerAuto = $treinReis->berekenAfstand($ontvangAdres, "driving");
             $gegevensNaarStation1PerFiets = $treinReis->berekenAfstand($verzendAdres, "bicycling");
             $gegevensNaarStation2PerFiets = $treinReis->berekenAfstand($ontvangAdres, "bicycling");
-
             $afstandNaarStation1PerAuto = $gegevensNaarStation1PerAuto['distance'];
             $afstandNaarStation2PerAuto = $gegevensNaarStation2PerAuto['distance'];
             $afstandNaarStation1PerFiets = $gegevensNaarStation1PerFiets['distance'];
@@ -90,29 +98,57 @@ class RoutePrijsBerekening {
             $goedkoopsteVanafBeginStation = $routePrijsBerekening->berekenGoedKoopsteRoute($afstandNaarStation1PerAuto, $afstandNaarStation1PerFiets);
             $goedkoopsteVanafEindStation = $routePrijsBerekening->berekenGoedKoopsteRoute($afstandNaarStation2PerAuto, $afstandNaarStation2PerFiets);
             $goedkoopsteDirecteRit = $routePrijsBerekening->berekenGoedKoopsteRoute($afstandPerAutoDirect, $afstandPerFietsDirect);
+
+            $prijzen1 = "Fiets: " . $goedkoopsteVanafBeginStation['prijzen'][0]['prijs'] . "<br>"
+                    . "Bode koeriers: " . $goedkoopsteVanafBeginStation['prijzen'][1]['prijs'] . "<br>"
+                    . "Pietersen: " . $goedkoopsteVanafBeginStation['prijzen'][2]['prijs'] . "<br>";
             
+            $prijzen2 = "Fiets: " . $goedkoopsteVanafEindStation['prijzen'][0]['prijs'] . "<br>"
+                    . "Bode koeriers: " . $goedkoopsteVanafEindStation['prijzen'][1]['prijs'] . "<br>"
+                    . "Pietersen: " . $goedkoopsteVanafEindStation['prijzen'][2]['prijs'] . "<br>";
+            
+            $prijzen3 = "Fiets: " . $goedkoopsteDirecteRit['prijzen'][0]['prijs'] . "<br>"
+                    . "Bode koeriers: " . $goedkoopsteDirecteRit['prijzen'][1]['prijs'] . "<br>"
+                    . "Pietersen: " . $goedkoopsteDirecteRit['prijzen'][2]['prijs'] . "<br>";
+            
+            $debug = "Beginplaats: " . $verzendAdres . "<br>Station 1: " . $gegevensNaarStation1PerAuto['stationAdres'] . "<br> Station 2: " . $gegevensNaarStation2PerAuto['stationAdres'] . " <br>
+                    Eindplaats: " . $ontvangAdres . "
+                      <br>Rit: Beginplaats naar station<br> Afstand: " . $gegevensNaarStation1PerAuto['distance'] . " KM <br> Prijzen: <br>" . $prijzen1 . "<br><br>" . "Rit: Station naar eindplaats<br>
+                    Afstand: " . $gegevensNaarStation2PerAuto['distance'] . " KM<br> Afstand: " . $afstandPerAutoDirect . "<br> Prijzen: <br>" . $prijzen2 . "<br><br>
+                    Directe rit: " . $afstandPerAutoDirect . "<br>Prijzen: <br>" . $prijzen3;
+//            var_dump($debug);
+//            var_dump($goedkoopsteVanafBeginStation);
+//            var_dump($goedkoopsteVanafEindStation);
+//            var_dump($goedkoopsteDirecteRit);
+//            exit();
+
             $prijsTrein = $goedkoopsteVanafBeginStation['tarief'] + 3 + $goedkoopsteVanafEindStation['tarief'];
             if ($prijsTrein < $goedkoopsteDirecteRit) {
+                $debug .= "<br><br> Totale prijs: " . $prijsTrein * 1.2 * 1.21;
                 $koerierArr = array(
                     $goedkoopsteVanafBeginStation['koerier_id'],
-                    $goedkoopsteVanafEindStation['koerier_id']
+                    $goedkoopsteVanafEindStation['koerier_id'],
+                    $debug
                 );
                 echo json_encode(array(
                     "trein",
                     $prijsTrein,
                     $koerierArr,
                     $gegevensNaarStation1PerAuto['stationAdres'],
-                    $gegevensNaarStation2PerAuto['stationAdres']
+                    $gegevensNaarStation2PerAuto['stationAdres'],
+                    $debug
                 ));
             } else {
+                $debug .= "<br><br> Totale prijs: " . $goedkoopsteDirecteRit * 1.2 * 1.21;
                 echo json_encode(array(
                     "koerier",
+                    $koerierArr,
                     $goedkoopsteDirecteRit['tarief'],
-                    $goedkoopsteDirecteRit['koerier_id']
+                    $goedkoopsteDirecteRit['koerier_id'],
+                    $debug
                 ));
             }
             exit();
         }
     }
-
 }
