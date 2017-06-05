@@ -38,7 +38,7 @@ class RoutePrijsBerekening {
         $koerier_id = null;
         foreach ($koeriersMetTarieven as $koerierMetTarief) {
             //hack om treinkoerier over te slaan
-            if($koerierMetTarief->getKoerier_id() === 4){
+            if($koerierMetTarief->getKoerier_id() == 4){
                 continue;
             }
             if ($koerierMetTarief->getIsFietsKoerier()) {
