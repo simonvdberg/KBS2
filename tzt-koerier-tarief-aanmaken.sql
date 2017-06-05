@@ -31,3 +31,9 @@ VALUES(null, 3, 10, 0, 25 );
 
 INSERT INTO Tarief
 VALUES(null, 3, 0, 0.39, 0 );
+
+INSERT INTO Koerier
+VALUES(null, "Treinkoerier");
+
+INSERT INTO Tarief
+VALUES(null, 4, 2, 0, 999999);
