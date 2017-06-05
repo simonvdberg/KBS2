@@ -60,7 +60,10 @@ public class ReisAccordeerScherm extends JFrame implements ActionListener {
     private int trajectId2;
     private int trajectId3;
 
+    private int referentie;
+
     public ReisAccordeerScherm(int referentie) {
+        this.referentie = referentie;
         try {
             ResultSet trajecten = DatabaseHelper.voerQueryUit("SELECT * FROM TrajectDelen td JOIN Traject t ON td.traject_id=t.traject_id WHERE td.opdracht_id=" + referentie);
             ResultSet klant = DatabaseHelper.voerQueryUit(" SELECT k.naam FROM Bezorgopdracht b JOIN Klant k ON b.klant_id=k.klant_id WHERE pakket_id=" + referentie);
@@ -94,17 +97,18 @@ public class ReisAccordeerScherm extends JFrame implements ActionListener {
         topPanel.setLayout(new GridLayout(0, 3));
         mainPanel.add(topPanel);
 
-        if (aantalTrajecten == 1) {
-            record1 = new TrajectRecord(trajectId1);
+        if (aantalTrajecten >= 1) {
+            record1 = new TrajectRecord(trajectId1, 1);
             mainPanel.add(record1);
         }
-        if (aantalTrajecten == 2) {
-            record1 = new TrajectRecord(trajectId2);
-            mainPanel.add(record1);
-         
-       if (aantalTrajecten == 3) {
-            record1 = new TrajectRecord(trajectId3);
-            mainPanel.add(record1);
+        if (aantalTrajecten >= 2) {
+            record2 = new TrajectRecord(trajectId2, 2);
+            mainPanel.add(record2);
+        }
+
+        if (aantalTrajecten >= 3) {
+            record3 = new TrajectRecord(trajectId3, 3);
+            mainPanel.add(record3);
         }
 
         botPanel = new JPanel();
@@ -132,6 +136,7 @@ public class ReisAccordeerScherm extends JFrame implements ActionListener {
         klantGegevensLabel = new JLabel("Klantgegevens");
 
         pasAan = new JButton("Pas aan");
+        pasAan.addActionListener(this);
 
         klantGegevensPanel = new JPanel();
         klantGegevensPanel.setLayout(new GridLayout(3, 0));
@@ -160,9 +165,11 @@ public class ReisAccordeerScherm extends JFrame implements ActionListener {
         volgende = new JButton("volgende te accorderen pakket >");
 
         botPanel.add(vorige);
+        vorige.addActionListener(this);
         botPanel.add(hoofdscherm);
         hoofdscherm.addActionListener(this);
         botPanel.add(volgende);
+        volgende.addActionListener(this);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1280, 700);
@@ -170,11 +177,26 @@ public class ReisAccordeerScherm extends JFrame implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e
+    ) {
         if (e.getSource().equals(hoofdscherm)) {
             dispose();
             Tabel tabel = new Tabel();
             tabel.setVisible(true);
         }
+        if (e.getSource().equals(volgende)) {
+            dispose();
+            ReisAccordeerScherm scherm = new ReisAccordeerScherm(referentie + 1);
+            scherm.setVisible(true);
+        }
+        if (e.getSource().equals(vorige)) {
+            dispose();
+            ReisAccordeerScherm scherm = new ReisAccordeerScherm(referentie - 1);
+            scherm.setVisible(true);
+        }
+        if (e.getSource().equals(pasAan)) {
+            klantGegevens.setEditable(true);
+        }
     }
+
 }

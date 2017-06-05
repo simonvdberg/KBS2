@@ -19,7 +19,7 @@ import javax.swing.table.TableModel;
  *
  * @author svdberg
  */
-public class Tabel extends JFrame {
+public class Tabel extends JFrame{
 
     public static String[] setTabelWaardes() {
         try {
@@ -39,7 +39,7 @@ public class Tabel extends JFrame {
 
     String[] tabelWaardes = setTabelWaardes();
 
-    String kolomNamen[] = {"Referentie", "Startpunt", "Eindpunt", "Afleverdag", "Deeltrajecten"};
+    String kolomNamen[] = {"Referentie", "Startpunt", "Eindpunt", "Deeltrajecten"};
 
     Object data[][] = {};
 

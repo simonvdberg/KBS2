@@ -7,6 +7,10 @@ package kbs2.backoffice.applicatie;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -26,21 +30,37 @@ public class TrajectRecord extends JPanel {
 
     private JButton accordeer;
     private JButton wijsAf;
-    
+
     private String referentie;
     private String startpunt;
     private String eindpunt;
+    private String koerierId;
     private String koerier;
     private String afstand;
     private String prijs;
     private String aflevermoment;
     private String Status;
 
-    public TrajectRecord() {
+    public TrajectRecord(int trajectId, int rijNummer) {
         setLayout(new GridLayout(2, 0));
-        String kolomNamen[] = {"Traject", "Startpunt", "Eindpunt", "Uitvoerder", "Afstand", "Inkoopkosten", "Aflevermoment", "Status", "Akkoord", "Moment"};
+        try {
+            ResultSet traject = DatabaseHelper.voerQueryUit("SELECT * FROM Traject WHERE traject_id=" +trajectId);
+            while(traject.next()){
+                startpunt = traject.getString("startpunt");
+                eindpunt = traject.getString("eindpunt");
+                koerierId = traject.getString("koerier_id");
+                prijs = traject.getString("vergoeding");
+            }
+            ResultSet koerierResult = DatabaseHelper.voerQueryUit("SELECT * FROM Koerier WHERE koerier_id=" + koerierId);
+            while(koerierResult.next()){
+                koerier = koerierResult.getString("naam");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TrajectRecord.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String kolomNamen[] = {"Traject", "Startpunt", "Eindpunt", "Uitvoerder", "Inkoopkosten", "Status", "Akkoord"};
         Object data[][] = {
-            {"1", "Barneveld", "Zwolle", "Fietskoeriers", "3812 meter", "9,00", "28-05-17, 16:31", "Afgeleverd", "JA", "30-05-17, 08:17"}
+            {rijNummer, startpunt, eindpunt, koerier, prijs, "Af te leveren", "NEE"}
         };
         model = new NietBewerkbaarModel(data, kolomNamen);
 
@@ -52,7 +72,7 @@ public class TrajectRecord extends JPanel {
 
         JTable table = new JTable();
         table.setModel(model);
-        table.setPreferredScrollableViewportSize(new Dimension(1100, 16));
+        table.setPreferredScrollableViewportSize(new Dimension(1250, 16));
         table.setFillsViewportHeight(true);
         JScrollPane scrollPane = new JScrollPane(table);
 
@@ -64,9 +84,4 @@ public class TrajectRecord extends JPanel {
         bot.add(accordeer);
         bot.add(wijsAf);
     }
-
-    TrajectRecord(int trajectId1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }
