@@ -79,7 +79,9 @@ public class TrajectRecord extends JPanel {
         top.add(scrollPane);
 
         accordeer = new JButton("Accordeer");
+        accordeer.setEnabled(false);
         wijsAf = new JButton("Wijs af");
+        wijsAf.setEnabled(false);
 
         bot.add(accordeer);
         bot.add(wijsAf);

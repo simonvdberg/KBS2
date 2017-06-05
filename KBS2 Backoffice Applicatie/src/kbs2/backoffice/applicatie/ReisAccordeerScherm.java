@@ -122,6 +122,7 @@ public class ReisAccordeerScherm extends JFrame implements ActionListener {
         klantReferentieLabel = new JLabel("Klantreferentie");
 
         accordeerAlle = new JButton("Accordeer alle");
+        accordeerAlle.setEnabled(false);
 
         klantReferentiePanel = new JPanel();
         klantReferentiePanel.setLayout(new GridLayout(3, 0));
@@ -160,9 +161,9 @@ public class ReisAccordeerScherm extends JFrame implements ActionListener {
         topPanel.add(klantGegevensPanel);
         topPanel.add(opmerkingenPanel);
 
-        vorige = new JButton("< vorig te accorderen pakket");
+        vorige = new JButton("< vorig pakket");
         hoofdscherm = new JButton("terug naar hoofdscherm");
-        volgende = new JButton("volgende te accorderen pakket >");
+        volgende = new JButton("volgend pakket >");
 
         botPanel.add(vorige);
         vorige.addActionListener(this);
