@@ -30,7 +30,7 @@ class DBManager {
             $rows[] = $row;
         }
         return $rows;
-    }
+    }   
 
     public function insertQuery($query) {
         $this->db->query($query);
