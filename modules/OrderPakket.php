@@ -39,7 +39,7 @@ class OrderPakket {
             $bezorgOpdracht->setStartpunt($this->verzendAdres);
             $bezorgOpdracht->setEindpunt($this->ontvangAdres);
             $bezorgOpdracht->setOpdracht_id($bezorgOpdracht->saveToDatabase());
-
+            
             $resApiCall = json_decode($_POST['resApiCall']);
             if (is_array($resApiCall[2])) {
                 $trajectEen = new Traject();

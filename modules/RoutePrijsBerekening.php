@@ -121,9 +121,8 @@ class RoutePrijsBerekening {
 //            var_dump($goedkoopsteVanafEindStation);
 //            var_dump($goedkoopsteDirecteRit);
 //            exit();
-
             $prijsTrein = $goedkoopsteVanafBeginStation['tarief'] + 3 + $goedkoopsteVanafEindStation['tarief'];
-            if ($prijsTrein < $goedkoopsteDirecteRit) {
+            if ($prijsTrein < $goedkoopsteDirecteRit['tarief']) {
                 $debug .= "<br><br> Totale prijs: " . $prijsTrein * 1.2 * 1.21;
                 $koerierArr = array(
                     $goedkoopsteVanafBeginStation['koerier_id'],
@@ -139,12 +138,14 @@ class RoutePrijsBerekening {
                     $debug
                 ));
             } else {
-                $debug .= "<br><br> Totale prijs: " . $goedkoopsteDirecteRit * 1.2 * 1.21;
+                $koerierArr = $goedkoopsteDirecteRit['koerier_id'];
+                $debug .= "<br><br> Totale prijs: " . $goedkoopsteDirecteRit['tarief'] * 1.2 * 1.21;
                 echo json_encode(array(
                     "koerier",
-                    $koerierArr,
                     $goedkoopsteDirecteRit['tarief'],
+                    $koerierArr,
                     $goedkoopsteDirecteRit['koerier_id'],
+                    null,
                     $debug
                 ));
             }

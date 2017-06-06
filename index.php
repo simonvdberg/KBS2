@@ -16,8 +16,15 @@ if (true) {
             <link href="templates/bootstrap/css/bootstrap.min.css" rel="stylesheet">
             <script src="templates/bootstrap/js/bootstrap.min.js"></script>
             <style>
+                @font-face {
+                    font-family: 'Balsamiq';
+                    src: url('templates/fonts/BalsamiqSansDownload/BalsamiqSansRegular.ttf') format('truetype');
+                    font-weight: normal;
+                    font-style: normal;
+                }
                 body{
-                    font-family: Helvetica
+                    font-family: Balsamiq, Helvetica;
+                    padding: 10px 0px;
                 }
                 .pagina{
                     display: none;
@@ -34,28 +41,66 @@ if (true) {
                 #waiting{
                     color: white;
                 }
+                .nav li{
+                    border: 1px solid black;
+                }
+                .nav li{
+                    padding: 0px;
+                    font-size: 13px;
+                    cursor: pointer;
+                }
+                .nav li a{
+                    color: black;
+                }
+                .nav li:last-child, .nav li:first-child{
+                    border: 0px solid black;
+                }
+                .nav li:first-child img{
+                    width: 90%;
+                    margin-top: 5px;
+                }
+                .nav li:last-child img{
+                    width: 40%;
+                }
+                .nav li:last-child a:hover{
+                    background-color: white;
+                }
+                .nav li .active{
+                    background-color: rgb(149, 188, 242);
+                }
+                
+                .btn{
+                    background-color: rgb(246, 178, 107);
+                    border-radius: 0px;
+                }
+                .btn:hover{
+                    background-color: rgb(237, 110, 33);
+                }
             </style>
         </head>
         <body>
             <div class="container">
                 <ul class="nav">
+                    <li class="nav-item col-md-1">
+                        <img src="templates/images/tzt.jpg" />
+                    </li>
                     <li class="nav-item col-md-2">
                         <a class="nav-link active changeStep" data-stap="1">
                             1 - De reis
                         </a>
                     </li>
                     <li class="nav-item col-md-2">
-                        <a class="nav-link changeStep" data-stap="2">
+                        <a class="nav-link disabled changeStep" data-stap="2">
                             2 - Het pakket
                         </a>
                     </li>
                     <li class="nav-item col-md-2">
-                        <a class="nav-link changeStep" data-stap="3">
+                        <a class="nav-link disabled changeStep" data-stap="3">
                             3 - Ons voorstel
                         </a>
                     </li>
                     <li class="nav-item col-md-2">
-                        <a class="nav-link changeStep" data-stap="4">
+                        <a class="nav-link disabled changeStep" data-stap="4">
                             4 - Uw gegevens
                         </a>
                     </li>
@@ -64,10 +109,9 @@ if (true) {
                             Bevestiging en referentie
                         </a>
                     </li>
-                    <li class="nav-item col-md-2">
+                    <li class="nav-item col-md-1">
                         <a href="#" data-toggle="modal" data-target="#exampleModal">
-                            ?
-                        </a>
+                            <img src="templates/images/help.png" />
                         </a>
                     </li>
                 </ul>
@@ -366,7 +410,7 @@ if (true) {
                 </form>
             </div>
             <div id="debugInfo" class="col-md-12">
-                
+
             </div>
             <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">

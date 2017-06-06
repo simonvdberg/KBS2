@@ -81,6 +81,7 @@ $("document").ready(function() {
                 method: "POST",
                 dataType: "json"
             }).done(function(data) {
+                console.log(data);
                 var prijs = (parseFloat(data[1]) * 1.2 * 1.21).toFixed(2);
                 $("#prijs").html("&euro;" + prijs);
                 $("#resultaatOphaalAdres").html(verzendAdres);
@@ -152,6 +153,7 @@ $("document").ready(function() {
 function disableNav(stap){
     $("ul.nav a.changeStep").each(function(){
         thisStap = $(this).data("stap");
+        $(this).removeClass("active");
         if(thisStap > stap){
             $(this).addClass("disabled");
         } else{
