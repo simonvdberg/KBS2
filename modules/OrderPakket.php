@@ -71,7 +71,7 @@ class OrderPakket {
                 $traject->setStartpunt($this->verzendAdres);
                 $traject->setEindpunt($this->ontvangAdres);
                 $traject->setTraject_id($traject->saveToDatabase());
-                $trajectEen->setKoerier_id($resApiCall[2]);
+                $traject->setKoerier_id($resApiCall[2]);
                 $traject->maakTrajectDeel($bezorgOpdracht->getOpdracht_id());
             }
             ?>
