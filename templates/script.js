@@ -81,8 +81,8 @@ $("document").ready(function() {
                 method: "POST",
                 dataType: "json"
             }).done(function(data) {
-                console.log(data);
                 var prijs = (parseFloat(data[1]) * 1.2 * 1.21).toFixed(2);
+                data.push(prijs);
                 $("#prijs").html("&euro;" + prijs);
                 $("#resultaatOphaalAdres").html(verzendAdres);
                 $("#resultaatAfleverAdres").html(ontvangAdres);
@@ -90,6 +90,7 @@ $("document").ready(function() {
                 $("input[name=resultaatAfleverAdres]").val(verzendAdres);
                 $("#resultaat").css("display", "block");
                 $("#waiting").css("display", "none");
+                console.log(data);
                 $("#resApiCall").val(JSON.stringify(data));
                 $("#debugInfo").html(data[5]);
             });

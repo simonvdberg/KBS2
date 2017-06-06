@@ -7,7 +7,7 @@ class PostcodeApi {
     private function makeCall($postcode, $huisnummer) {
         // De headers worden altijd meegestuurd als array
         $headers = array();
-        $headers[] = 'X-Api-Key: YYuy7Fo8oP5Gt0DtW1JhL3ZoE0sRecrb7ERLoVQc';
+        $headers[] = 'X-Api-Key: uesivMN65jyFdc0b54OD5itc3foDZHP5B0grcgs4';
 
 // De URL naar de API call
         $url = 'https://postcode-api.apiwise.nl/v2/addresses/?postcode=' . $postcode . '&number=' . $huisnummer;
