@@ -65,7 +65,7 @@ public class ReisAccordeerScherm extends JFrame implements ActionListener {
     public ReisAccordeerScherm(int referentie) {
         this.referentie = referentie;
         try {
-            ResultSet trajecten = DatabaseHelper.voerQueryUit("SELECT * FROM TrajectDelen td JOIN Traject t ON td.traject_id=t.traject_id WHERE td.opdracht_id=" + referentie);
+            ResultSet trajecten = DatabaseHelper.voerQueryUit("SELECT * FROM TrajectDelen td JOIN Traject t ON td.traject_id=t.traject_id WHERE td.opdracht_id=" + referentie + " ORDER BY t.traject_id DESC");
             ResultSet klant = DatabaseHelper.voerQueryUit(" SELECT k.naam FROM Bezorgopdracht b JOIN Klant k ON b.klant_id=k.klant_id WHERE pakket_id=" + referentie);
             while (klant.next()) {
                 klantGegevensTekst = klant.getString("naam");

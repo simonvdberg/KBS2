@@ -44,15 +44,15 @@ public class TrajectRecord extends JPanel {
     public TrajectRecord(int trajectId, int rijNummer) {
         setLayout(new GridLayout(2, 0));
         try {
-            ResultSet traject = DatabaseHelper.voerQueryUit("SELECT * FROM Traject WHERE traject_id=" +trajectId);
-            while(traject.next()){
-                startpunt = traject.getString("startpunt");
-                eindpunt = traject.getString("eindpunt");
+            ResultSet traject = DatabaseHelper.voerQueryUit("SELECT * FROM Traject WHERE traject_id=" + trajectId);
+            while (traject.next()) {
+                startpunt = traject.getString("eindpunt");
+                eindpunt = traject.getString("startpunt");
                 koerierId = traject.getString("koerier_id");
                 prijs = traject.getString("vergoeding");
             }
             ResultSet koerierResult = DatabaseHelper.voerQueryUit("SELECT * FROM Koerier WHERE koerier_id=" + koerierId);
-            while(koerierResult.next()){
+            while (koerierResult.next()) {
                 koerier = koerierResult.getString("naam");
             }
         } catch (SQLException ex) {
@@ -74,7 +74,7 @@ public class TrajectRecord extends JPanel {
         table.setModel(model);
         table.setPreferredScrollableViewportSize(new Dimension(1250, 16));
         table.setFillsViewportHeight(true);
-        JScrollPane scrollPane = new JScrollPane(table);
+        JScrollPane scrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         top.add(scrollPane);
 

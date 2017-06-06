@@ -28,6 +28,7 @@ echo "Direct per fiets: " . $afstandPerFietsDirect . "km<br>";
 $routePrijsBerekening = new RoutePrijsBerekening();
 $goedkoopsteVanafBeginStation = $routePrijsBerekening->berekenGoedKoopsteRoute($afstandNaarStation1PerAuto, $afstandNaarStation1PerFiets);
 $goedkoopsteVanafEindStation = $routePrijsBerekening->berekenGoedKoopsteRoute($afstandNaarStation2PerAuto, $afstandNaarStation2PerFiets);
+//Return deze waarde voor prijs als de directe rit goedkoper is
 $goedkoopsteDirecteRit = $routePrijsBerekening->berekenGoedKoopsteRoute($afstandPerAutoDirect, $afstandPerFietsDirect);
 echo "Prijs naar beginstation: " . $goedkoopsteVanafBeginStation . " EU <br>";
 echo "Prijs vanaf eindstation: " . $goedkoopsteVanafEindStation . " EU <br>";

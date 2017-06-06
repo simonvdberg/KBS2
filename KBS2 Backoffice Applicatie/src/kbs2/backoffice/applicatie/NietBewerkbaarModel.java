@@ -34,8 +34,8 @@ public class NietBewerkbaarModel extends DefaultTableModel {
                 Object[] rijen = new Object[4];
                 for (int i = 0; i < rijen.length; i++) {
                     rijen[0] = res.getString("pakket_id");
-                    rijen[1] = res.getString("startpunt");
-                    rijen[2] = res.getString("eindpunt");
+                    rijen[1] = res.getString("eindpunt");
+                    rijen[2] = res.getString("startpunt");
                     ResultSet deelTrajecten = DatabaseHelper.voerQueryUit("SELECT count( *) as deeltrajecten FROM Bezorgopdracht B JOIN TrajectDelen T ON B.opdracht_id = T.opdracht_id WHERE B.opdracht_id =" + res.getString("opdracht_id"));
                     while (deelTrajecten.next()) {
                         rijen[3] = deelTrajecten.getInt("deeltrajecten");

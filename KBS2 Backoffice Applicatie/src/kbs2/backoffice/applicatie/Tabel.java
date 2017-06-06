@@ -63,7 +63,7 @@ public class Tabel extends JFrame{
             reisAccordeerScherm.setVisible(true);
         });
 
-        JScrollPane scrollPane = new JScrollPane(table);
+        JScrollPane scrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(scrollPane);
     }
 }
